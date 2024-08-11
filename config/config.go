@@ -1,7 +1,8 @@
 package config
 
 import (
-	"errors"
+	"fmt"
+
 	"gorm.io/gorm"
 )
 
@@ -11,7 +12,19 @@ var (
 )
 
 func Init() error {
-	return errors.New("fake Error")
+	var err error
+
+	db, err = InitializeMySql()
+
+	if err != nil {
+		return fmt.Errorf("error initializing mysql: %w", err)
+	}
+
+	return nil
+}
+
+func GetMysql() *gorm.DB {
+	return db
 }
 
 func GetLogger(prefix string) *Logger {
